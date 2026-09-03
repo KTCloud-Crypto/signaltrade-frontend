@@ -1,5 +1,8 @@
 # SignalTrade Frontend
 
+이 저장소는 `KTCloud-Crypto`의 `feat/132`, 커밋 `013107a`에서
+`frontend/`의 Git 이력을 분리한 독립 저장소입니다.
+
 React 19와 Vite로 만든 SignalTrade 웹 UI입니다. 운영 정적 파일은 비공개 S3와 CloudFront가 제공하고, Nginx Docker 이미지는 Backend와 Grafana의 CloudFront origin 역할을 유지합니다. 로컬 Docker 환경에서는 Nginx가 정적 파일도 제공합니다.
 
 ## 주요 경로
