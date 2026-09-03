@@ -10,3 +10,10 @@ dist/
 *.key
 *.p12
 *.pfx
+kubeconfig*
+coverage/
+coverage.xml
+.coverage
+.vite/
+playwright-report/
+test-results/
