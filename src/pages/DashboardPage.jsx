@@ -190,7 +190,7 @@ export default function DashboardPage() {
                     <p>사용할 전략을 선택하고 투자 비율과 자동 청산 조건을 설정합니다.</p>
                   </div>
                 </div>
-                <StrategyPanel executionMode={mode} />
+                <StrategyPanel key={`strategies-${mode}`} executionMode={mode} />
               </section>
 
               <section className={styles.liveTabPanel} hidden={dashboardTab !== 'activity'}>
@@ -200,7 +200,7 @@ export default function DashboardPage() {
                     <p>전략이 감지한 신호와 {mode === 'live' ? '실제 계좌' : '모의 계좌'}에 반영된 실행 결과를 확인합니다.</p>
                   </div>
                 </div>
-                <ActivityPanel mode={mode} />
+                <ActivityPanel key={`activity-${mode}`} mode={mode} />
               </section>
             </div>
           )}

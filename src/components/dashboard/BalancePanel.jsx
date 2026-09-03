@@ -140,7 +140,7 @@ export default function BalancePanel({ onOverviewChange, refreshToken = 0, showH
       {account && (
         <div className={styles.summaryCards}>
           <SummaryCard icon={WalletCards} tone="blue" label="계좌 총 평가자산" value={`${formatMoney(account.account_equity)}원`} description="원화와 전체 코인 평가액" />
-          <SummaryCard icon={Banknote} tone="purple" label="주문 가능 KRW" value={`${formatMoney(account.available_krw)}원`} description="즉시 주문 가능한 원화 잔고" />
+          <SummaryCard icon={Banknote} tone="purple" label="주문 가능 KRW" value={`${formatMoney(account.strategy_available_krw)}원`} description="미체결 전략 예약액을 제외한 원화" />
           <SummaryCard icon={CalendarCheck2} tone="green" label="신규 전략 예약 가능 KRW" value={`${formatMoney(account.strategy_available_krw)}원`} description="새 전략에 배정 가능한 금액" />
           <SummaryCard icon={Clock3} tone="orange" label="미체결 전략 예약 KRW" value={`${formatMoney(account.strategy_reserved_krw)}원`} description="아직 매수되지 않은 전략 예산" />
           <SummaryCard icon={ChartNoAxesCombined} tone="blue" label="전략 관리 포지션" value={`${formatMoney(account.managed_positions_value)}원`} description="전략이 보유 중인 코인 평가액" />
