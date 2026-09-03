@@ -1,78 +1,15 @@
 # SignalTrade Frontend
 
-이 저장소는 `KTCloud-Crypto`의 `feat/132`, 커밋 `013107a`에서
-`frontend/`의 Git 이력을 분리한 독립 저장소입니다.
-
-React 19와 Vite로 만든 SignalTrade 웹 UI입니다. 운영 정적 파일은 비공개 S3와 CloudFront가 제공하고, Nginx Docker 이미지는 Backend와 Grafana의 CloudFront origin 역할을 유지합니다. 로컬 Docker 환경에서는 Nginx가 정적 파일도 제공합니다.
-
-## 주요 경로
-
-| 경로 | 화면 |
-|---|---|
-| `/login` | 로그인 |
-| `/signup` | 회원가입 |
-| `/password-reset` | Telegram 기반 비밀번호 재설정 |
-| `/dashboard` | 모의·실전 통합 요약 |
-| `/dashboard/:mode` | 모의 또는 실전 투자 관리 |
-| `/analytics` | 사용자 손익·거래 분석 |
-| `/settings` | 계정, Upbit API Key, Telegram 설정 |
-| `/guide` | 서비스 이용 안내 |
-| `/guide/strategies` | 전략 안내 |
-| `/guide/upbit-key` | Upbit API Key 발급 안내 |
-
-로그인이 필요한 화면은 저장된 Access Token이 없으면 `/login`으로 이동합니다. 화면에 표시하는 마켓과 전략은 Backend API가 반환한 활성 카탈로그를 사용하므로 개수를 Frontend 문서에 고정하지 않습니다.
-
-## 디렉터리
+사용자에게 모의·실전 투자 화면을 제공하는 React·Vite 웹 저장소입니다.
 
 ```text
-frontend/
-├── src/
-│   ├── api/          # Backend API client
-│   ├── components/   # 공통 UI와 대시보드 구성요소
-│   ├── hooks/        # polling 등 공통 hook
-│   ├── pages/        # route별 페이지
-│   └── utils/        # 표시 변환과 공통 유틸리티
-├── nginx/            # Nginx 템플릿과 proxy 설정
-├── public/
-├── Dockerfile
-└── package.json
+src/api/         Backend API 호출
+src/components/  공통 화면 구성요소
+src/pages/       화면별 페이지
+src/hooks/       공통 상태·polling
+public/          정적 파일
 ```
 
-## API와 프록시
+브라우저는 `/api`를 통해 Identity, Strategy, Trading, Portfolio API를 호출합니다. 로컬에서는 kind Ingress가 API를 연결하고, 운영에서는 빌드 결과물을 S3·CloudFront로 배포합니다.
 
-- 브라우저 요청은 기본적으로 같은 origin의 `/api`를 사용합니다.
-- CloudFront는 `/api`를 Nginx origin으로, Nginx는 이를 Backend로 전달합니다.
-- `/monitoring/`은 Basic Auth를 적용한 뒤 Grafana로 전달합니다.
-- Grafana Live WebSocket도 같은 하위 경로에서 프록시되므로 운영 변경 시 Upgrade 헤더 설정을 유지해야 합니다.
-- `/metrics`와 내부 exporter 포트는 외부에 프록시하지 않습니다.
-
-## 개발 및 검사
-
-```bash
-cd frontend
-npm ci
-npm run dev
-npm run lint
-npm run build
-```
-
-로컬 Vite 개발 서버는 `/api` 요청을 기본적으로
-`http://127.0.0.1:8080`의 kind Ingress로 전달합니다. 현재 kind 클러스터를
-유지한 채 실행할 때는 먼저 다음 port-forward를 실행합니다.
-
-```bash
-kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8080:80
-```
-
-다른 주소를 사용할 때만 `VITE_DEV_API_TARGET`을 지정하면 됩니다. Vite가
-Ingress용 `Host: signaltrade.local` 헤더와 `/api` prefix 제거를 처리하므로
-로컬 `/etc/hosts` 수정은 필요하지 않습니다.
-
-전체 Docker 환경에서는 프로젝트 루트에서 실행합니다.
-
-```bash
-docker compose up -d --build frontend
-docker compose logs -f frontend
-```
-
-로컬 전체 실행과 환경변수는 [../SETUP.md](../SETUP.md), 운영 프록시와 배포는 [../docs/CD_SETUP.md](../docs/CD_SETUP.md), S3·CloudFront 구성은 [../docs/CLOUDFRONT_FRONTEND.md](../docs/CLOUDFRONT_FRONTEND.md)를 참고합니다.
+검사는 `npm run lint`, 빌드는 `npm run build`를 사용합니다.
