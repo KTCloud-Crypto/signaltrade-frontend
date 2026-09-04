@@ -6,6 +6,13 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
@@ -17,5 +24,17 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm test
       - run: npm run build
       - run: docker build -t signaltrade-frontend:ci .
+      - name: Smoke test container health
+        run: |
+          docker run -d --name signaltrade-frontend-ci -p 8080:80 signaltrade-frontend:ci
+          trap 'docker logs signaltrade-frontend-ci; docker rm -f signaltrade-frontend-ci' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8080/healthz >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
