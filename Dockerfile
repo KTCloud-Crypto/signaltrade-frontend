@@ -15,6 +15,8 @@ FROM nginx:1.27-alpine
 
 COPY nginx.conf /etc/nginx/nginx.http.conf.template
 COPY nginx.https.conf /etc/nginx/nginx.https.conf.template
+COPY nginx.msa-api-prefixed.conf /etc/nginx/snippets/msa-api-prefixed.conf
+COPY nginx.msa-api-root.conf /etc/nginx/snippets/msa-api-root.conf
 COPY docker-entrypoint-deploy.sh /usr/local/bin/docker-entrypoint-deploy.sh
 COPY --from=build /app/dist /usr/share/nginx/html
 

@@ -137,12 +137,8 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
       replaceStrategy(await apiFetch(`/strategies/${strategy.id}/subscription?mode=${executionMode}&market=${strategy.market}`, {
         method: 'PUT',
         body: JSON.stringify({
-          enabled: !strategy.selected,
+          enabled: false,
           force_disable: forceDisable,
-          invest_ratio: strategy.invest_ratio,
-          timeframe_minutes: strategy.selected_timeframe_minutes,
-          stop_loss_rate: Number(stopLossDrafts[strategy.id]) / 100 || 0,
-          take_profit_rate: Number(takeProfitDrafts[strategy.id]) / 100 || 0,
         }),
       }))
       loadStrategies()
@@ -232,7 +228,6 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
         method: 'PUT',
         body: JSON.stringify({
           enabled: false,
-          invest_ratio: strategy.invest_ratio,
         }),
       }))
       loadStrategies()
