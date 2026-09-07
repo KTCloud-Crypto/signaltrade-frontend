@@ -135,7 +135,7 @@ export default function DashboardPage() {
                 ) : (
                   <span>
                     <small>모의 누적 손익</small>
-                    <strong className={(accountOverview?.profitLoss ?? 0) >= 0 ? styles.overviewReady : styles.overviewWarning}>
+                    <strong className={(accountOverview?.profitLoss ?? 0) >= 0 ? styles.profitUp : styles.profitDown}>
                       {accountOverview ? `${accountOverview.profitLoss >= 0 ? '+' : ''}${formatWon(accountOverview.profitLoss)}` : '-'}
                     </strong>
                     <em>보유 포지션의 현재 평가액을 포함한 성과</em>

@@ -18,6 +18,8 @@
 .liveOverview em { color: var(--text-muted); font-size: 11px; font-style: normal; font-weight: 550; }
 .liveOverview .overviewReady { color: var(--success); }
 .liveOverview .overviewWarning { color: var(--danger); }
+.liveOverview .profitUp { color: var(--danger); }
+.liveOverview .profitDown { color: #2f6fed; }
 .liveTabs { margin-bottom: 28px; border-bottom: 1px solid var(--border); display: flex; gap: 28px; }
 .liveTabs button { min-height: 50px; padding: 0 2px; border: 0; border-bottom: 2px solid transparent; color: #6f788a; background: transparent; font-size: 14px; font-weight: 750; }
 .liveTabs button:hover { color: var(--text); }
