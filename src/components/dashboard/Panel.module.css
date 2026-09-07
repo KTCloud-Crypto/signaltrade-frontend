@@ -49,8 +49,8 @@ td small.error { color: var(--danger); }
 .summaryIconorange { color: #ed982f; background: #fff4e7; }
 .summaryIconsky { color: #4186dc; background: #edf6ff; }
 .summaryIconred { color: #e65565; background: #fff0f2; }
-.positive { color: var(--success) !important; }
-.negative { color: var(--danger) !important; }
+.positive { color: var(--danger) !important; }
+.negative { color: #2f6fed !important; }
 
 @media (max-width: 900px) { .summaryCards { grid-template-columns: repeat(2, 1fr); } }
 .strategySnapshotSection { margin-top: 8px; }

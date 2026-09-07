@@ -148,7 +148,7 @@ export default function BalancePanel({ onOverviewChange, refreshToken = 0, showH
           <SummaryCard icon={Hourglass} tone="sky" label="주문 중 KRW" value={`${formatMoney(account.locked_krw)}원`} description="미체결 주문에 묶인 원화" />
           <SummaryCard
             icon={TrendingUp}
-            tone={summary?.realized_profit_loss >= 0 ? 'green' : 'red'}
+            tone={summary?.realized_profit_loss >= 0 ? 'red' : 'blue'}
             label="전략 실현손익"
             value={summary ? `${summary.realized_profit_loss >= 0 ? '+' : ''}${formatMoney(summary.realized_profit_loss)}원` : '-'}
             description="매도가 끝난 누적 손익"

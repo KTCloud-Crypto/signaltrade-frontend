@@ -45,8 +45,8 @@
 .ledgerMain small, .ledgerRight small { color: var(--text-muted); font-size: 10px; }
 .ledgerRight { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
 .ledgerAmount { color: var(--text-soft); font-size: 12px; font-weight: 700; }
-.ledgerUp { color: var(--success); background: var(--success-soft); }
-.ledgerDown { color: var(--danger); background: var(--danger-soft); }
+.ledgerUp { color: var(--danger); background: var(--danger-soft); }
+.ledgerDown { color: #2f6fed; background: #eaf1ff; }
 strong.ledgerUp, strong.ledgerDown { padding: 0; background: transparent; }
 .ledgerNeutral { color: var(--text-soft); }
 

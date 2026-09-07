@@ -156,8 +156,8 @@ function PnlChart({ points }) {
       >
         <defs>
           <linearGradient id="pnlLineGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset={`${zeroPercent}%`} stopColor="#20ad83" />
             <stop offset={`${zeroPercent}%`} stopColor="#ed5b68" />
+            <stop offset={`${zeroPercent}%`} stopColor="#2f6fed" />
           </linearGradient>
         </defs>
         <line x1="0" y1={zeroY} x2="100" y2={zeroY} className={styles.zeroLine} />

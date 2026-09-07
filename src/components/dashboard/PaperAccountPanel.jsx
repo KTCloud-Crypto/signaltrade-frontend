@@ -104,8 +104,8 @@ export default function PaperAccountPanel({ onOverviewChange, refreshToken = 0, 
           <SummaryCard icon={<PieChart size={21} />} tone="orange" label="전략 보유 포지션" value={`${formatNumber(account?.holdings_value)}원`} description="현재 보유 중인 모의 포지션 평가액" />
           <SummaryCard icon={<Clock3 size={21} />} tone="sky" label="모의 현금 잔고" value={`${formatNumber(account?.cash_balance)}원`} description="예약 예산을 포함한 전체 가상 현금" />
           <SummaryCard icon={<ChartNoAxesCombined size={21} />} tone="purple" label="순입금액" value={`${formatNumber(account?.net_deposit)}원`} description="모의 입금액에서 출금액을 제외한 금액" />
-          <SummaryCard icon={<TrendingUp size={21} />} tone="red" label="누적 손익" value={`${profit >= 0 ? '+' : ''}${formatNumber(profit)}원`} description="보유 포지션의 현재 평가액을 포함한 성과" valueClassName={profit >= 0 ? panelStyles.positive : panelStyles.negative} />
-          <SummaryCard icon={<TrendingUp size={21} />} tone="green" label="누적 수익률" value={`${returnRate >= 0 ? '+' : ''}${returnRate.toFixed(2)}%`} description="순입금액 대비 누적 손익률" valueClassName={returnRate >= 0 ? panelStyles.positive : panelStyles.negative} />
+          <SummaryCard icon={<TrendingUp size={21} />} tone={profit >= 0 ? 'red' : 'blue'} label="누적 손익" value={`${profit >= 0 ? '+' : ''}${formatNumber(profit)}원`} description="보유 포지션의 현재 평가액을 포함한 성과" valueClassName={profit >= 0 ? panelStyles.positive : panelStyles.negative} />
+          <SummaryCard icon={<TrendingUp size={21} />} tone={returnRate >= 0 ? 'red' : 'blue'} label="누적 수익률" value={`${returnRate >= 0 ? '+' : ''}${returnRate.toFixed(2)}%`} description="순입금액 대비 누적 손익률" valueClassName={returnRate >= 0 ? panelStyles.positive : panelStyles.negative} />
         </div>
 
         <section className={`${panelStyles.accountSection} ${styles.cashSection}`}>
