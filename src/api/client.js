@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+// 동일 Origin의 /api를 기본값으로 사용합니다. 개발 서버는 Vite proxy가,
+// staging/production은 CloudFront가 실제 API Origin으로 전달합니다.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 const TOKEN_KEY = 'signaltrade_token'
 let redirectingToLogin = false
 
