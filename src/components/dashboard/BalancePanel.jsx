@@ -239,7 +239,7 @@ export default function BalancePanel({ onOverviewChange, refreshToken = 0, showH
                   <td>{formatQuantity(item.unallocated_volume)}</td>
                   <td>{item.current_price == null ? '-' : `${formatMoney(item.current_price)}원`}</td>
                   <td>{item.unallocated_value == null ? '-' : `${formatMoney(item.unallocated_value)}원`}</td>
-                  <td><span className={item.supported ? styles.neutral : styles.failed}>{item.supported ? '지원 종목' : '조회 전용'}</span></td>
+                  <td><span className={item.current_price != null ? styles.neutral : styles.failed}>{item.supported ? '전략 지원' : item.current_price != null ? '시세 조회 가능' : '시세 조회 불가'}</span></td>
                 </tr>
               ))}</tbody>
             </table>
