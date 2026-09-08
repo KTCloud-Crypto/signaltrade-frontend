@@ -18,7 +18,7 @@ const STATUS_LABELS = {
   success: '체결 성공',
   submitted: '주문 접수',
   partially_filled: '부분 체결',
-  validation_failed: '검사 실패',
+  validation_failed: '주문 미실행',
   failed: '주문 실패',
   cancelled: '주문 취소',
   ready: '주문 준비',

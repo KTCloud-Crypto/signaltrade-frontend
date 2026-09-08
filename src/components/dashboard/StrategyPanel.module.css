@@ -24,6 +24,7 @@
 .meta { margin-top: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .meta span { min-height: 30px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; display: inline-flex; align-items: center; gap: 5px; color: var(--text-muted); background: #fff; font-size: 12px; font-weight: 700; }
 .meta .orphaned { border-color: rgba(243,162,58,.3); color: #a9640b; background: var(--warning-soft); }
+.meta .ordersStopped { border-color: rgba(214,154,50,.35); color: #8a5700; background: #fff7e4; }
 .runtimeStatus { margin: 14px 0 0 !important; padding-top: 12px; border-top: 1px solid var(--border); color: var(--text-muted) !important; font-size: 11px !important; line-height: 1.4 !important; }
 .selectButton, .selectedButton { min-width: 112px; min-height: 40px; padding: 0 14px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; font-weight: 800; }
 .selectButton { border: 0; color: #fff; background: var(--primary); }
@@ -62,6 +63,8 @@
 .testButtons button { border: 1px solid var(--border); color: var(--text-soft); background: #fff; }
 .manualSell { border: 1px solid rgba(237,91,104,.3); color: var(--danger); background: var(--danger-soft); }
 .notice { margin: 14px 0 0; color: var(--text-muted); font-size: 12px; }
+.ordersStoppedNotice { margin-top: 14px; padding: 12px 14px; border: 1px solid #f2c36f; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #8a641f; background: #fff9ec; font-size: 12px; }
+.ordersStoppedNotice button { flex: 0 0 auto; padding: 8px 11px; border: 1px solid #d69a32; border-radius: 8px; color: #714700; background: #fff; font-size: 11px; font-weight: 750; }
 .error { margin: 0; color: var(--danger); font-size: 13px; }
 .success { margin: 14px 0 0; padding: 11px 13px; border-radius: 9px; color: var(--success); background: var(--success-soft); font-size: 13px; }
 

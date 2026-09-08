@@ -32,6 +32,12 @@
 .sectionHeading p { margin: 8px 0 0; color: var(--text-muted); font-size: 15px; font-weight: 500; letter-spacing: -.15px; line-height: 1.65; }
 .dashboardSection > article { margin-top: 12px; }
 .error { padding: 12px 14px; border: 1px solid #f2a6ad; border-radius: 10px; color: var(--danger); background: #fffafb; font-size: 13px; }
+.liveTradingWarning { margin: 18px 0 0; padding: 17px 19px; border: 1px solid #f2c36f; border-radius: 14px; display: flex; align-items: center; gap: 14px; color: #8a5700; background: #fff9ec; }
+.liveTradingWarning > svg { flex: 0 0 auto; }
+.liveTradingWarning div { min-width: 0; margin-right: auto; }
+.liveTradingWarning strong { color: #714700; font-size: 14px; }
+.liveTradingWarning p { margin: 4px 0 0; color: #8a641f; font-size: 12px; line-height: 1.5; }
+.liveTradingWarning button { flex: 0 0 auto; min-height: 38px; padding: 0 13px; border: 1px solid #d69a32; border-radius: 9px; color: #714700; background: #fff; font-size: 12px; font-weight: 750; }
 .footer { width: min(1480px, 100%); margin: 0 auto; padding: 18px 32px 30px; display: flex; align-items: center; justify-content: space-between; color: #9ca5b4; font-size: 11px; }
 
 @media (max-width: 680px) {
@@ -42,6 +48,9 @@
   .livePageHeader h1 { font-size: 29px; }
   .refreshStatus { width: 100%; justify-content: space-between; }
   .modeButton { width: 100%; }
+  .liveTradingWarning { align-items: flex-start; flex-wrap: wrap; }
+  .liveTradingWarning div { width: calc(100% - 42px); }
+  .liveTradingWarning button { width: 100%; }
   .liveOverview { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; }
   .liveOverview > span { min-height: 118px; padding: 18px; }
   .liveOverview strong { font-size: 20px; }

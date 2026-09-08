@@ -72,6 +72,9 @@ export default function SettingsPage() {
     if (newValue && !window.confirm('⚠️ 실전투자를 활성화하시겠습니까?\n\n활성화 시 연결된 Upbit 계좌에서 전략에 따라\n실제 매수/매도 주문이 자동으로 실행됩니다.')) {
       return
     }
+    if (!newValue && !window.confirm('실전투자를 비활성화하시겠습니까?\n\n활성 전략의 신호 계산은 계속되지만 실제 매수·매도 주문은 실행되지 않습니다. 전략 설정과 기존 기록은 유지됩니다.')) {
+      return
+    }
     run('live-trading', async () => {
       const updated = await apiFetch('/users/me', {
         method: 'PUT',
@@ -79,7 +82,9 @@ export default function SettingsPage() {
       })
       setUser(updated)
       setLiveTradingEnabled(updated.live_trading_enabled)
-    }, newValue ? '실전투자가 활성화되었습니다.' : '실전투자가 비활성화되었습니다.')
+    }, newValue
+      ? '실전투자가 활성화되었습니다.'
+      : '실전 자동주문이 중지되었습니다. 활성 전략은 유지되며 실제 주문만 차단됩니다.')
   }
 
   const changePassword = (event) => {
