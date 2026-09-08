@@ -21,6 +21,7 @@ function RuntimeSummary({ strategy }) {
 export default function StrategyCard({
   strategy,
   executionMode,
+  liveTradingEnabled,
   loading,
   ratioDraft,
   amountDraft,
@@ -43,6 +44,7 @@ export default function StrategyCard({
   const [expanded, setExpanded] = useState(false)
   const symbol = strategy.market.split('-').at(-1)
   const coinIcon = coinIconForMarket(strategy.market)
+  const liveOrdersStopped = executionMode === 'live' && strategy.selected && !liveTradingEnabled
 
   useEffect(() => {
     if (activationPromptNonce) setExpanded(true)
@@ -64,13 +66,13 @@ export default function StrategyCard({
               </div>
             </div>
             <button
-              className={strategy.selected ? `${styles.selectedButton} ${strategy.paused ? styles.pausedButton : ''}` : styles.selectButton}
+              className={strategy.selected ? `${styles.selectedButton} ${strategy.paused || liveOrdersStopped ? styles.pausedButton : ''}` : styles.selectButton}
               onClick={() => onToggle(strategy)}
               disabled={loading}
               title={strategy.selected ? '클릭하여 전략 해제' : '전략 선택'}
             >
-              {strategy.selected && !strategy.paused && <RefreshCw className={styles.runningIcon} size={21} />}
-              {loading ? '처리 중...' : strategy.selected ? strategy.paused ? '매수 일시정지' : '실행 중' : '전략 선택'}
+              {strategy.selected && !strategy.paused && !liveOrdersStopped && <RefreshCw className={styles.runningIcon} size={21} />}
+              {loading ? '처리 중...' : liveOrdersStopped ? '실제 주문 중지' : strategy.selected ? strategy.paused ? '매수 일시정지' : '자동매매 실행 중' : '전략 선택'}
             </button>
           </div>
           <p>{strategy.description}</p>
@@ -80,6 +82,7 @@ export default function StrategyCard({
               ? <span>{strategy.allocation_mode === 'amount' ? '지정 금액' : '주문 예산'} {formatNumber(strategy.allocated_amount)}원</span>
               : <span>투자 비율 {Math.round(strategy.invest_ratio * 100)}%</span>}
             {!strategy.selected && strategy.has_open_position && <span className={styles.orphaned}>전략 해제됨 · 포지션 보유 중</span>}
+            {liveOrdersStopped && <span className={styles.ordersStopped}>전략 활성 · 실제 주문 중지</span>}
           </div>
           {strategy.selected && <RuntimeSummary strategy={strategy} />}
         </div>

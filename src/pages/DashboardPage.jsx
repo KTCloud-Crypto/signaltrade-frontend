@@ -2,7 +2,7 @@ import MarketTicker from '../components/dashboard/MarketTicker'
 import { serviceReadiness } from '../utils/serviceReadiness'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { RefreshCw } from 'lucide-react'
+import { RefreshCw, ShieldAlert } from 'lucide-react'
 import SiteHeader from '../components/layout/SiteHeader'
 import BalancePanel from '../components/dashboard/BalancePanel'
 import StrategyPanel from '../components/dashboard/StrategyPanel'
@@ -70,6 +70,7 @@ export default function DashboardPage() {
 
   const liveBlocked = mode === 'live' && user && !user.has_api_key
   const liveAccessPending = mode === 'live' && !user
+  const liveOrdersStopped = mode === 'live' && user && !user.live_trading_enabled
   const formatWon = (value) => value == null ? '-' : `${Math.round(value).toLocaleString()}원`
   const lastUpdated = accountOverview?.updatedAt
     ? new Intl.DateTimeFormat('ko-KR', { hour: '2-digit', minute: '2-digit' }).format(accountOverview.updatedAt)
@@ -105,6 +106,17 @@ export default function DashboardPage() {
           </div>
           <MarketTicker />
           {error && <p className={styles.error}>{error}</p>}
+
+          {!liveBlocked && !liveAccessPending && liveOrdersStopped && (
+            <section className={styles.liveTradingWarning} role="alert">
+              <ShieldAlert size={23} />
+              <div>
+                <strong>실전 자동주문이 중지되어 있습니다.</strong>
+                <p>활성화된 전략은 계속 신호를 계산하지만 실제 매수·매도 주문은 실행되지 않습니다.</p>
+              </div>
+              <button onClick={() => navigate('/settings?highlight=live')}>실전투자 설정으로 이동</button>
+            </section>
+          )}
 
           {!liveBlocked && !liveAccessPending && (
             <>
@@ -190,7 +202,12 @@ export default function DashboardPage() {
                     <p>사용할 전략을 선택하고 투자 비율과 자동 청산 조건을 설정합니다.</p>
                   </div>
                 </div>
-                <StrategyPanel key={`strategies-${mode}`} executionMode={mode} />
+                <StrategyPanel
+                  key={`strategies-${mode}`}
+                  executionMode={mode}
+                  liveTradingEnabled={user?.live_trading_enabled === true}
+                  onOpenLiveSettings={() => navigate('/settings?highlight=live')}
+                />
               </section>
 
               <section className={styles.liveTabPanel} hidden={dashboardTab !== 'activity'}>

@@ -11,7 +11,7 @@ import styles from './StrategyPanel.module.css'
 
 const REFRESH_INTERVAL_MS = 5_000
 
-export default function StrategyPanel({ executionMode = 'simulated' }) {
+export default function StrategyPanel({ executionMode = 'simulated', liveTradingEnabled = true, onOpenLiveSettings }) {
   const [markets, setMarkets] = useState([])
   const [strategies, setStrategies] = useState([])
   const [loadingId, setLoadingId] = useState(null)
@@ -151,6 +151,10 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
   }
 
   const saveSettings = async (strategy) => {
+    if (executionMode === 'live' && !liveTradingEnabled) {
+      showToast('실전 자동매매가 비활성화되어 있습니다. 계정 설정에서 실전투자를 활성화한 후 다시 시도해 주세요.')
+      return
+    }
     const timeframe = Number(timeframeDrafts[strategy.id])
     if (!strategy.allowed_timeframes.includes(timeframe)) {
       showToast('분봉을 선택해 주세요.')
@@ -296,6 +300,7 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
       key={strategy.id}
       strategy={strategy}
       executionMode={executionMode}
+      liveTradingEnabled={liveTradingEnabled}
       loading={loadingId === strategy.id}
       ratioDraft={ratioDrafts[strategy.id] ?? ''}
       amountDraft={amountDrafts[strategy.id] ?? ''}
@@ -322,7 +327,16 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
       <header>
         <div><h3>자동매매 전략</h3><p>현재 사용하는 전략을 우선 표시합니다. 계산값은 5초마다 자동 갱신됩니다.</p></div>
         {!wizardOpen && (
-          <button className={styles.addStrategyHeaderButton} onClick={() => setWizardOpen(true)}>
+          <button
+            className={styles.addStrategyHeaderButton}
+            onClick={() => {
+              if (executionMode === 'live' && !liveTradingEnabled) {
+                showToast('실전 자동매매를 먼저 활성화해야 전략을 실행할 수 있습니다.')
+                return
+              }
+              setWizardOpen(true)
+            }}
+          >
             <Plus size={16} /> 새 전략
           </button>
         )}
@@ -419,6 +433,12 @@ export default function StrategyPanel({ executionMode = 'simulated' }) {
         {loadError && <p className={styles.error}>{loadError}</p>}
         {error && <p className={styles.error}>{error}</p>}
         {notice && <p className={styles.success}>{notice}</p>}
+        {executionMode === 'live' && !liveTradingEnabled && (
+          <div className={styles.ordersStoppedNotice}>
+            <span>전략 설정은 유지되지만 실제 주문은 중지된 상태입니다.</span>
+            <button onClick={onOpenLiveSettings}>실전투자 활성화</button>
+          </div>
+        )}
         <p className={styles.notice}>
           주문 금액은 전략을 선택하는 시점의 주문 가능 현금을 기준으로 확정되며, 매도하면 회수한 금액이 다음 주문 예산이 됩니다.
           주문 가능 금액은 매수 수수료(약 0.05%)를 미리 뺀 값이라 100%로 설정해도 수수료 부족으로 주문이 실패하지 않습니다.
